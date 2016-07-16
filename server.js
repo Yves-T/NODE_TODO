@@ -4,7 +4,7 @@ const _ = require('underscore');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const todos = [];
+var todos = [];
 var todoNextId = 1;
 
 app.use(bodyParser.json());
@@ -45,6 +45,17 @@ app.post('/todos', function (req, res) {
     body.id = todoNextId++;
     todos.push(body);
     res.json(body);
+});
+
+app.delete('/todos/:id', function (req, res) {
+    const todoId = parseInt(req.params.id, 10);
+    const matchedTodo = _.findWhere(todos, {id: todoId});
+    if (!matchedTodo) {
+        return res.status(404).json({"error": " no todo found with that id"});
+    } else {
+        todos = _.without(todos, matchedTodo);
+        res.json(matchedTodo);
+    }
 });
 
 app.listen(PORT, function () {
