@@ -1,11 +1,11 @@
 const _ = require('underscore');
 
-module.exports = (app, db) => {
+module.exports = (app, db, middleware) => {
     app.get('/', function (req, res) {
         res.send('Todo API Root');
     });
 
-    app.get('/todos', function (req, res) {
+    app.get('/todos', middleware.requireAuthentication, function (req, res) {
         var query = req.query;
         var where = {};
 
@@ -25,7 +25,7 @@ module.exports = (app, db) => {
 
     });
 
-    app.get('/todos/:id', function (req, res) {
+    app.get('/todos/:id', middleware.requireAuthentication, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
 
         db.todo.findById(todoId).then((todo) => {
@@ -39,7 +39,7 @@ module.exports = (app, db) => {
 
     });
 
-    app.post('/todos', function (req, res) {
+    app.post('/todos', middleware.requireAuthentication, function (req, res) {
         var body = req.body;
 
         body = _.pick(body, 'description', 'completed');
@@ -52,7 +52,7 @@ module.exports = (app, db) => {
 
     });
 
-    app.delete('/todos/:id', function (req, res) {
+    app.delete('/todos/:id', middleware.requireAuthentication, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
         db.todo.destroy({
             where: {
@@ -70,7 +70,7 @@ module.exports = (app, db) => {
             .catch((error) => res.status(500).send());
     });
 
-    app.put('/todos/:id', function (req, res) {
+    app.put('/todos/:id', middleware.requireAuthentication, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
         var body = req.body;
         body = _.pick(body, 'description', 'completed');

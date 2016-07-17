@@ -3,13 +3,14 @@ const bodyParser = require('body-parser');
 const db = require('./db');
 const todoApiRoute = require('./routes/todoApiRoutes');
 const userApiRoute = require('./routes/userApi');
+const middleware = require('./middleware')(db);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-todoApiRoute(app, db);
+todoApiRoute(app, db, middleware);
 userApiRoute(app, db);
 
 
