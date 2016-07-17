@@ -7,7 +7,7 @@ module.exports = function (app, db) {
         body = _.pick(body, 'email', 'password');
 
         db.user.create(body).then((user) => {
-            res.json(user.toJSON());
+            res.json(user.toPublicJSON());
         }).catch((error) => {
             res.status(400).send(error);
         });
