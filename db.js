@@ -5,7 +5,7 @@ var sequelize;
 if (env === 'production') {
     // running on Heroku
     sequelize = new Sequelize(process.env.DATABASE_URL, {
-        dialiect: 'postgres'
+        dialect: 'postgres'
     });
 } else {
     sequelize = new Sequelize(undefined, undefined, undefined, {
