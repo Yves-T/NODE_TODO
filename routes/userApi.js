@@ -19,7 +19,13 @@ module.exports = function (app, db) {
         body = _.pick(body, 'email', 'password');
 
         db.user.authenticate(body).then((user) => {
-            res.json(user.toPublicJSON());
+            const token = user.generateToken('authentication');
+            if (token) {
+                res.header('Auth', token).json(user.toPublicJSON());
+            } else {
+                res.status(401).send();
+            }
+
         }, () => {
             res.status(401).send();
         });

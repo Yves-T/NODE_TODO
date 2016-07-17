@@ -1,5 +1,8 @@
 const _ = require('underscore');
 const bcrypt = require('bcrypt');
+const cryptjs = require('crypto-js');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 module.exports = function (sequelize, DataTypes) {
     var user = sequelize.define('user', {
@@ -45,6 +48,22 @@ module.exports = function (sequelize, DataTypes) {
                 // remove password data from json response
                 var json = this.toJSON();
                 return _.pick(json, 'id', 'email', 'createdAt', 'updatedAt');
+            },
+            generateToken: function (type) {
+                if (!_.isString(type)) {
+                    return undefined;
+                }
+
+                try {
+                    const stringData = JSON.stringify({id: this.get('id'), type: type});
+                    const encryptedData = cryptjs.AES.encrypt(stringData, config.cryptoSecret).toString();
+                    return jwt.sign({
+                        token: encryptedData
+                    }, config.jwtSecret);
+                } catch (error) {
+                    return undefined;
+                }
+
             }
         },
         classMethods: {
