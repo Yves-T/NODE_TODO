@@ -7,7 +7,9 @@ module.exports = (app, db, middleware) => {
 
     app.get('/todos', middleware.requireAuthentication, function (req, res) {
         var query = req.query;
-        var where = {};
+        var where = {
+            userId: req.user.get('id')
+        };
 
         if (query.hasOwnProperty('completed')) {
             where.completed = query.completed === 'true';
@@ -27,8 +29,13 @@ module.exports = (app, db, middleware) => {
 
     app.get('/todos/:id', middleware.requireAuthentication, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
+        console.log(req.user.get('id'));
+        const where = {
+            id: todoId,
+            userId: req.user.get('id')
+        };
 
-        db.todo.findById(todoId).then((todo) => {
+        db.todo.findOne({where}).then((todo) => {
             if (!!todo) {
                 res.json(todo.toJSON());
             } else {
@@ -60,7 +67,8 @@ module.exports = (app, db, middleware) => {
         const todoId = parseInt(req.params.id, 10);
         db.todo.destroy({
             where: {
-                id: todoId
+                id: todoId,
+                userId: req.user.get('id')
             }
         })
             .then((numberOfRowsDeleted) => {
@@ -89,7 +97,13 @@ module.exports = (app, db, middleware) => {
 
         console.log(typeof body.description);
 
-        db.todo.findById(todoId).then((todo) => {
+        const where = {
+            id: todoId,
+            userId: req.user.get('id')
+        };
+
+        db.todo.findOne({where})
+            .then((todo) => {
             if (todo) {
                 todo.update(attributes)
                     .then((todo) => {
