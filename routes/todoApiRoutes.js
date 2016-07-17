@@ -1,8 +1,5 @@
 const _ = require('underscore');
 
-var todos = [];
-var todoNextId = 1;
-
 module.exports = (app, db) => {
     app.get('/', function (req, res) {
         res.send('Todo API Root');
@@ -53,8 +50,6 @@ module.exports = (app, db) => {
         }
 
         db.todo.create(body).then((todo) => {
-            body.id = todoNextId++;
-            todos.push(body);
             res.json(todo.toJSON());
         }).catch((error) => {
             res.status(400).send(error);
