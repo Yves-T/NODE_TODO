@@ -45,7 +45,6 @@ module.exports = (app, db) => {
         body = _.pick(body, 'description', 'completed');
 
         if (!_.isBoolean(body.completed) || _.isString(!body.description) || body.description.trim().length === 0) {
-            console.log('error validation');
             return res.status(400).send();
         }
 
