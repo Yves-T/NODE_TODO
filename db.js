@@ -1,11 +1,19 @@
 const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'local';
+const config = require('./config');
 
 var sequelize;
-if (env === 'production') {
-    // running on Heroku
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
-        dialect: 'postgres'
+if (env === 'development') {
+    sequelize = new Sequelize(config.dbName, config.dbUser, config.dbPassword, {
+        host: 'localhost',
+        dialect: 'mysql',
+
+        pool: {
+            max: 5,
+            min: 0,
+            idle: 10000
+        }
+
     });
 } else {
     sequelize = new Sequelize(undefined, undefined, undefined, {
