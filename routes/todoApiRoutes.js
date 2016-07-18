@@ -95,8 +95,6 @@ module.exports = (app, db, middleware) => {
             attributes.description = body.description;
         }
 
-        console.log(typeof body.description);
-
         const where = {
             id: todoId,
             userId: req.user.get('id')
