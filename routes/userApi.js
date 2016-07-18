@@ -1,45 +1,43 @@
 const _ = require('underscore');
 const bcrypt = require('bcrypt');
+const config = require('../config');
+const jwt = require('jsonwebtoken');
+const passportService = require('../services/passport');
+const passport = require('passport');
+const requireAuth = passport.authenticate('jwt', {session: false});
+const requireSignIn = passport.authenticate('local', {session: false});
 
-module.exports = function (app, db, middleware) {
+function tokenForUser(user) {
+    const timestamp = new Date().getTime();
+    return jwt.sign({sub: user.get('id')}, config.jwtSecret, {
+        expiresIn: 10080 // in seconds
+    });
+}
+
+module.exports = function (app, db) {
     app.post('/users', function (req, res) {
         var body = req.body;
 
         body = _.pick(body, 'email', 'password');
 
         db.user.create(body).then((user) => {
-            res.json(user.toPublicJSON());
+            const token = tokenForUser(user);
+
+            res.header('Auth', token).json({token});
         }).catch((error) => {
             res.status(400).send(error);
         });
     });
 
-    app.post('/users/login', function (req, res) {
-        var body = req.body;
-        body = _.pick(body, 'email', 'password');
-        var userInstance;
+    app.post('/users/login', requireSignIn, function (req, res) {
+        const token = tokenForUser(req.user);
 
-        db.user.authenticate(body).then((user) => {
-            const token = user.generateToken('authentication');
-            userInstance = user;
-
-            return db.token.create({
-                token: token
-            });
-
-        }).then((tokenInstance) => {
-            res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
-        }).catch(() => {
-            res.status(401).send();
-        });
+        res.header('Auth', token).json({token});
     });
 
-    app.delete('/users/login', middleware.requireAuthentication, function (req, res) {
-        req.token.destroy().then(() => {
-            res.status(204).send();
-        }).catch(() => {
-            res.status(500).send();
-        })
+    app.delete('/users/logout', requireAuth, function (req, res) {
+        req.logout();
+        res.status(204).send();
     });
 
 };

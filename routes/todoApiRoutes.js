@@ -1,11 +1,14 @@
 const _ = require('underscore');
+const passportService = require('../services/passport');
+const passport = require('passport');
+const requireAuth = passport.authenticate('jwt', {session: false});
 
-module.exports = (app, db, middleware) => {
+module.exports = (app, db) => {
     app.get('/', function (req, res) {
         res.send('Todo API Root');
     });
 
-    app.get('/todos', middleware.requireAuthentication, function (req, res) {
+    app.get('/todos', requireAuth, function (req, res) {
         var query = req.query;
         var where = {
             userId: req.user.get('id')
@@ -27,7 +30,7 @@ module.exports = (app, db, middleware) => {
 
     });
 
-    app.get('/todos/:id', middleware.requireAuthentication, function (req, res) {
+    app.get('/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
         console.log(req.user.get('id'));
         const where = {
@@ -46,7 +49,7 @@ module.exports = (app, db, middleware) => {
 
     });
 
-    app.post('/todos', middleware.requireAuthentication, function (req, res) {
+    app.post('/todos', requireAuth, function (req, res) {
         var body = req.body;
 
         body = _.pick(body, 'description', 'completed');
@@ -63,7 +66,7 @@ module.exports = (app, db, middleware) => {
 
     });
 
-    app.delete('/todos/:id', middleware.requireAuthentication, function (req, res) {
+    app.delete('/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
         db.todo.destroy({
             where: {
@@ -82,7 +85,7 @@ module.exports = (app, db, middleware) => {
             .catch((error) => res.status(500).send());
     });
 
-    app.put('/todos/:id', middleware.requireAuthentication, function (req, res) {
+    app.put('/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
         var body = req.body;
         body = _.pick(body, 'description', 'completed');
