@@ -1,12 +1,25 @@
+const cryptojs = require('crypto-js');
 module.exports = function (db) {
     return {
         requireAuthentication: (req, res, next) => {
-            const token = req.get('Auth');
+            const token = req.get('Auth') || '';
+            db.token.findOne({
+                where: {
+                    tokenHash: cryptojs.MD5(token).toString()
+                }
+            }).then((tokenInstance) => {
+                if (!tokenInstance) {
+                    throw new Error();
+                }
 
-            db.user.findByToken(token).then((user) => {
+                req.token = tokenInstance;
+                return db.user.findByToken(token);
+            }).then((user) => {
                 req.user = user;
                 next();
-            }, () => res.status(401).send());
+            }).catch((error) => {
+                res.status(401).send();
+            });
         }
     };
 };

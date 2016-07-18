@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 todoApiRoute(app, db, middleware);
-userApiRoute(app, db);
+userApiRoute(app, db, middleware);
 
 
-db.sequelize.sync().then(function () {
+db.sequelize.sync({force: true}).then(function () {
 
     app.listen(PORT, function () {
         console.log('Express listening on port: ' + PORT);
