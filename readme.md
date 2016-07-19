@@ -10,7 +10,7 @@ private routes in express.
 
 ## Overview of technologies used
 
-### Backend
+### Back end
 
 * NodeJs
 * Express
@@ -21,6 +21,11 @@ private routes in express.
 
 * Angular Js
 * satellizer
+
+### Build tools and transpilers
+
+* gulp
+* LESS
 
 Communication backend - frontend: REST
 
