@@ -1,4 +1,4 @@
-# NodeJs Todo API
+# NodeJs Todo app
 
 This is a very simple todo App running on a NodeJs server. The local 
 development database is sqlite. The production version is running with
