@@ -1,1 +1,49 @@
-<p>Todos</p>
+<div class="todos">
+    <div class="row">
+        <div class="col-lg-6  col-lg-offset-3">
+            <form id="newTodoForm" ng-submit="todo.addTodo()">
+                <input class="form-control" placeholder="What are you going to do ?" type="text"
+                       ng-model="todo.newTodo">
+            </form>
+        </div>
+    </div>
+
+    <div class="row filter">
+        <div class="col-lg-6  col-lg-offset-3">
+            <ul class="nav nav-pills">
+                <li><a href="javascript:;">Items left <span class="badge">{{todo.todosLeft}}</span></a></li>
+                <li ng-class="{active: todo.filterOption == 'all'}">
+                    <a ng-click="todo.setFilter('all')" href="javascript:;">All</a>
+                </li>
+                <li ng-class="{active: todo.filterOption == 'active'}">
+                    <a ng-click="todo.setFilter('active')" href="javascript:;">Active </a>
+                </li>
+                <li ng-class="{active: todo.filterOption == 'completed'}">
+                    <a ng-click="todo.setFilter('completed')" href="javascript:;">Completed</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row todoItems">
+        <div class="col-lg-6  col-lg-offset-3">
+            <ul id="todoList">
+                <li ng-repeat="todoItem in todo.todos | todoFilter:todo.filterOption"
+                    ng-class="{editing: todoItem == todo.editedTodo}">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" ng-model="todoItem.completed"
+                               ng-change="todo.toggleCompleted(todoItem)">
+                        <label ng-class="{completed: todoItem.completed == true}" ng-dblclick="todo.editTodo(todoItem)">{{todoItem.description}}</label>
+                        <span ng-click="todo.removeTodo(todoItem)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    </div>
+                    <form ng-submit="todo.saveEdits(todoItem, 'submit')">
+                        <input class="edit form-control" ng-trim="false" ng-model="todoItem.description"
+                               todo-escape="todo.revertEdits(todo)" ng-blur="todo.saveEdits(todoItem, 'blur')"
+                               todo-focus="todoItem == todo.editedTodo">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
