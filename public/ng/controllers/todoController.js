@@ -82,7 +82,7 @@
 
                 vm.removeTodo = function (todo) {
                     TodoService.removeTodo(todo, function (success) {
-                        vm.todos.splice(vm.todos.indexOf(todo));
+                        vm.todos.splice(vm.todos.indexOf(todo), 1);
                     }, function (error) {
                         console.error(error);
                     });
