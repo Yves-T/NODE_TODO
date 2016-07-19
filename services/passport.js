@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 // set up options for JWT strategy
 const jwtOptions = {
-    jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+    jwtFromRequest: ExtractJwt.fromAuthHeader('authorization'),
     secretOrKey: config.jwtSecret
 };
 

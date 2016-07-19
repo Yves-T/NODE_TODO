@@ -4,9 +4,6 @@ const passport = require('passport');
 const requireAuth = passport.authenticate('jwt', {session: false});
 
 module.exports = (app, db) => {
-    app.get('/', function (req, res) {
-        res.send('Todo API Root');
-    });
 
     app.get('/todos', requireAuth, function (req, res) {
         var query = req.query;

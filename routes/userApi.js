@@ -40,4 +40,8 @@ module.exports = function (app, db) {
         res.status(204).send();
     });
 
+    app.get('/users/authenticate', requireAuth, function (req, res) {
+        res.json(req.user.toPublicJSON());
+    });
+
 };
