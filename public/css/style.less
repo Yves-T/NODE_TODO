@@ -1,43 +1,45 @@
-.todos .edit {
+.todos {
+
+  .edit {
     display: none;
-}
+  }
 
-.todos .view {
+  .view {
     font-size: 20px;
-}
+  }
 
-.todos .view span {
+  .view span {
     float: right;
-}
+  }
 
-.todos li {
+  li {
     position: relative;
     height: 40px;
-}
+  }
 
-.todos .completed {
+  .completed {
     color: #cccccc;
     font-weight: normal;
     text-decoration: line-through;
-}
+  }
 
-.todos li .toggle {
+  li .toggle {
     width: 40px;
-}
+  }
 
-.todos ul {
+  ul {
     list-style: none;
-}
+  }
 
-.todos .editing .edit {
+  .editing .edit {
     display: block;
-}
+  }
 
-.todos .editing .view label {
+  .editing .view label {
     display: none;
-}
+  }
 
-.edit {
+  .edit {
     position: relative;
     top: -26px;
     margin: 0;
@@ -46,16 +48,18 @@
     box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-}
+  }
 
-.todos .todoItems {
+  .todoItems {
     padding-top: 20px;
-}
+  }
 
-.todos .filter {
+  .filter {
     margin-top: 10px;
+  }
+
+  .nav > li:first-child > a:hover {
+    background-color: transparent;
+  }
 }
 
-.todos .nav > li:first-child > a:hover {
-    background-color: transparent;
-}
