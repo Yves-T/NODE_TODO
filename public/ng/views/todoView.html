@@ -33,7 +33,8 @@
                     <div class="view">
                         <input class="toggle" type="checkbox" ng-model="todoItem.completed"
                                ng-change="todo.toggleCompleted(todoItem)">
-                        <label ng-class="{completed: todoItem.completed == true}" ng-dblclick="todo.editTodo(todoItem)">{{todoItem.description}}</label>
+                        <label ng-class="{completed: todoItem.completed == true}" ios-dblclick="todo.editTodo(todoItem)"
+                               ng-dblclick="todo.editTodo(todoItem)">{{todoItem.description}}</label>
                         <span ng-click="todo.removeTodo(todoItem)"><i class="fa fa-trash" aria-hidden="true"></i></span>
                     </div>
                     <form ng-submit="todo.saveEdits(todoItem, 'submit')">
