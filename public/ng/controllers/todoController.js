@@ -7,9 +7,14 @@
         .controller('TodoController', [
             '$auth',
             '$state',
-            function ($auth, $state) {
+            'UserService',
+            function ($auth, $state, UserService) {
 
                 var vm = this;
+
+                UserService.getAuthenticatedUser().then(function (result) {
+                    console.log(result);
+                });
             }]);
 
 })();

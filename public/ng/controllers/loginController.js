@@ -35,7 +35,7 @@
                             localStorage.setItem('user', user);
                             $rootScope.authenticated = true;
                             $rootScope.currentUser = response.data;
-                            $state.go('todos', {});
+                            $state.go('todo', {});
                         }
                     }, function (error) {
                         console.log(error);

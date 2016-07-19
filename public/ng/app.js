@@ -4,7 +4,7 @@
 
     angular
         .module('todoApp', ['ui.router', 'satellizer'])
-        .config(function ($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide) {
+        .config(function ($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide, $locationProvider) {
 
             function redirectWhenLoggedOut($q, $injector) {
 
@@ -41,6 +41,8 @@
                 }
             }
 
+            $locationProvider.html5Mode(true);
+
             // Setup for the $httpInterceptor
             $provide.factory('redirectWhenLoggedOut', redirectWhenLoggedOut);
 
@@ -70,10 +72,31 @@
                     templateUrl: '/ng/views/loginView.html',
                     controller: 'LoginController as login'
                 })
-                .state('todos', {
-                    url: '/todos',
+                .state('todo', {
+                    url: '/todo',
                     templateUrl: '/ng/views/todoView.html',
                     controller: 'TodoController as todo'
                 });
+        })
+        .run(function ($rootScope, $state, $auth, $window, $location, $http) {
+
+            $rootScope.$on('$stateChangeStart', function (event, toState) {
+                var user = JSON.parse(localStorage.getItem('user'));
+
+                if (user) {
+
+                    $rootScope.authenticated = true;
+
+                    $rootScope.currentUser = user;
+
+                    if (toState.name === "login" || toState.name === "home") {
+
+                        event.preventDefault();
+
+                        $state.go('todo');
+                    }
+                }
+
+            });
         });
 })();
