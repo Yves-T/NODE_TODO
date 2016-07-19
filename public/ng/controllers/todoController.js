@@ -41,6 +41,7 @@
 
                     TodoService.addTodo(todo, function (success) {
                         vm.todos.unshift(success);
+                        vm.newTodo = '';
                     }, function (error) {
                         console.error(error);
                     });
