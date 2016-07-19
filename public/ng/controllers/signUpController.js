@@ -15,7 +15,7 @@
                         password: vm.password
                     };
 
-                    // Use Satellizer's $auth service to login
+
                     $auth.signup(credentials).then(function () {
                         vm.loginError = false;
                         vm.showSuccess = true;
