@@ -53,6 +53,8 @@
             // route the JWT should be retrieved from
             $authProvider.loginUrl = '/users/login';
 
+            $authProvider.signupUrl = '/users';
+
             $authProvider.authHeader = 'authorization';
 
             $authProvider.authToken = 'JWT';
@@ -71,6 +73,11 @@
                     url: '/login',
                     templateUrl: '/ng/views/loginView.html',
                     controller: 'LoginController as login'
+                })
+                .state('signup', {
+                    url: '/signup',
+                    templateUrl: '/ng/views/signUpView.html',
+                    controller: 'SignUpController as signup'
                 })
                 .state('todo', {
                     url: '/todo',
