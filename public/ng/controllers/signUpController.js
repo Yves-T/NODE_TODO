@@ -8,6 +8,7 @@
             '$auth',
             function ($auth) {
                 var vm = this;
+                vm.showForm = true;
                 vm.signUp = function () {
 
                     var credentials = {
@@ -19,6 +20,7 @@
                     $auth.signup(credentials).then(function () {
                         vm.loginError = false;
                         vm.showSuccess = true;
+                        vm.showForm = false;
                     }, function (error) {
                         console.error(error);
                         vm.showSuccess = false;

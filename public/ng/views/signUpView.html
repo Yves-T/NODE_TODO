@@ -12,8 +12,8 @@
         <p>Your account was created successfullly. Please click <a ui-sref="login">here</a> to login.</p>
     </div>
 
-
-    <form name="userForm" ng-submit="signup.signUp(userForm.$valid)" novalidate>
+    <div ng-show="signup.showForm">
+        <form name="userForm" ng-submit="signup.signUp(userForm.$valid)" novalidate>
         <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" name="email" ng-model="signup.email" required>
@@ -34,5 +34,5 @@
 
     <p>Already have an account? <a ui-sref="login">Login</a></p>
     <p>Or go <a ui-sref="home">home</a>.</p>
-
+    </div>
 </div>
