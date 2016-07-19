@@ -3,7 +3,7 @@
 
     angular
         .module('todoApp')
-        .directive('todoFocus', function ($timeout) {
+        .directive('todoFocus', ['$timeout', function ($timeout) {
             'use strict';
 
             return function (scope, elem, attrs) {
@@ -15,5 +15,5 @@
                     }
                 });
             };
-        });
+        }]);
 })();
