@@ -23,7 +23,6 @@
                         // Loop through each rejection reason and redirect to the login
                         // state if one is encountered
                         angular.forEach(rejectionReasons, function (value, key) {
-                            console.log(rejection.data);
                             if (rejection.data === value) {
 
                                 // If we get a rejection corresponding to one of the reasons

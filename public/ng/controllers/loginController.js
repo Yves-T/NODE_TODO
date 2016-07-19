@@ -10,7 +10,6 @@
             '$rootScope',
             'UserService',
             function ($auth, $state, $rootScope, UserService) {
-                console.log('inside login');
                 var vm = this;
                 vm.login = function () {
 
