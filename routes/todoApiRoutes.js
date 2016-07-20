@@ -29,7 +29,6 @@ module.exports = (app, db) => {
 
     app.get('/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
-        console.log(req.user.get('id'));
         const where = {
             id: todoId,
             userId: req.user.get('id')
