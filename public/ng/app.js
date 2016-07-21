@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('todoApp', ['ui.router', 'satellizer'])
+        .module('todoApp', ['ui.router', 'satellizer', 'ngAnimate', 'ui.bootstrap'])
         .config(function ($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide, $locationProvider) {
 
             function redirectWhenLoggedOut($q, $injector) {

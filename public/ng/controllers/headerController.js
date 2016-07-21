@@ -8,7 +8,8 @@
             '$auth',
             '$state',
             '$rootScope',
-            function ($auth, $state, $rootScope) {
+            '$uibModal',
+            function ($auth, $state, $rootScope, $uibModal) {
 
                 var vm = this;
 
@@ -28,7 +29,21 @@
 
                         $state.go('home', {});
                     });
-                }
+                };
+
+                vm.showHelp = function () {
+                    $uibModal.open({
+                        animation: true,
+                        templateUrl: '/ng/views/modal.html',
+                        controller: 'HelpController as modal',
+                        size: 'lg',
+                        resolve: {
+                            items: function () {
+
+                            }
+                        }
+                    });
+                };
 
             }]);
 
