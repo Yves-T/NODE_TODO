@@ -76,6 +76,7 @@
                     ListService.addList(listItem, function (listItem) {
                         shortenListItem(listItem);
                         vm.lists.push(listItem);
+                        listItem.todoCount = 0;
                         vm.newListItem = '';
                     }, function (error) {
                         console.error(error);
