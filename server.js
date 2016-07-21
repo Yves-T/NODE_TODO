@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const db = require('./db');
 const todoApiRoute = require('./routes/todoApiRoutes');
 const userApiRoute = require('./routes/userApi');
+const listApiRoute = require('./routes/listApi');
 const angularRoute = require('./routes/angularRoute');
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.static(__dirname + '/public'));
 
 todoApiRoute(app, db);
 userApiRoute(app, db);
+listApiRoute(app, db);
 angularRoute(app);
 
 

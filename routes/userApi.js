@@ -19,8 +19,11 @@ module.exports = function (app, db) {
         var body = req.body;
 
         body = _.pick(body, 'email', 'password');
+        body.lists = [{'title': 'empty list'}];
 
-        db.user.create(body).then((user) => {
+        db.user.create(body, {
+            include: [db.list]
+        }).then((user) => {
             const token = tokenForUser(user);
 
             res.header('Auth', token).json({token});

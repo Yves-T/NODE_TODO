@@ -5,10 +5,12 @@ const requireAuth = passport.authenticate('jwt', {session: false});
 
 module.exports = (app, db) => {
 
-    app.get('/todos', requireAuth, function (req, res) {
+    app.get('/list/:listId/todos', requireAuth, function (req, res) {
         var query = req.query;
+        const listId = parseInt(req.params.listId, 10);
+        const userId = req.user.get('id');
         var where = {
-            userId: req.user.get('id')
+            listId: listId
         };
 
         if (query.hasOwnProperty('completed')) {
@@ -21,17 +23,25 @@ module.exports = (app, db) => {
             }
         }
 
-        db.todo.findAll({where}).then((todos) => {
-            res.json(todos);
-        }).catch((error) => res.status(500).send);
+        getList(listId, userId).then((list) => {
+            if(!!list) {
+                list.getTodos({where}).then((todos) => {
+                    res.json(todos);
+                });
+            } else {
+                res.status(404).json({"error": " no list found with that id"});
+            }
 
+        }).catch((error) => res.status(500).send);
     });
 
-    app.get('/todos/:id', requireAuth, function (req, res) {
+    app.get('/list/:listId/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
+        const listId = parseInt(req.params.listId, 10);
+
         const where = {
             id: todoId,
-            userId: req.user.get('id')
+            listId: listId
         };
 
         db.todo.findOne({where}).then((todo) => {
@@ -45,29 +55,35 @@ module.exports = (app, db) => {
 
     });
 
-    app.post('/todos', requireAuth, function (req, res) {
+    app.post('/list/:listId/todos', requireAuth, function (req, res) {
         var body = req.body;
+        const listId = parseInt(req.params.listId, 10);
+        const userId = req.user.get('id');
 
         body = _.pick(body, 'description', 'completed');
 
-        db.todo.create(body).then((todo) => {
-            req.user.addTodo(todo).then(() => {
-                return todo.reload();
-            }).then((todo) => {
-                res.json(todo.toJSON());
-            })
+        getList(listId, userId).then((list) => {
+            db.todo.create(body).then((todo) => {
+                list.addTodo(todo).then(() => {
+                    return todo.reload();
+                }).then((todo) => {
+                    res.json(todo.toJSON());
+                });
+            });
         }).catch((error) => {
             res.status(400).send(error);
         });
 
     });
 
-    app.delete('/todos/:id', requireAuth, function (req, res) {
+    app.delete('/list/:listId/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
+        const listId = parseInt(req.params.listId, 10);
+
         db.todo.destroy({
             where: {
                 id: todoId,
-                userId: req.user.get('id')
+                listId: listId
             }
         })
             .then((numberOfRowsDeleted) => {
@@ -81,8 +97,9 @@ module.exports = (app, db) => {
             .catch((error) => res.status(500).send());
     });
 
-    app.put('/todos/:id', requireAuth, function (req, res) {
+    app.put('/list/:listId/todos/:id', requireAuth, function (req, res) {
         const todoId = parseInt(req.params.id, 10);
+        const listId = parseInt(req.params.listId, 10);
         var body = req.body;
         body = _.pick(body, 'description', 'completed');
         var attributes = {};
@@ -96,7 +113,7 @@ module.exports = (app, db) => {
 
         const where = {
             id: todoId,
-            userId: req.user.get('id')
+            listId: listId
         };
 
         db.todo.findOne({where})
@@ -114,4 +131,12 @@ module.exports = (app, db) => {
         })
 
     });
+
+    function getList(listId, userId) {
+        const where = {
+            userId: userId,
+            id: listId
+        };
+        return db.list.findOne({where});
+    }
 };
