@@ -93,7 +93,13 @@
                     });
                 };
 
-                vm.showItemsForList = function (listItem) {
+                vm.showItemsForList = function (listItem, event) {
+                    if (event && event.target.className !== 'fa fa-trash') {
+                        getTodos(listItem);
+                    }
+                };
+
+                function getTodos(listItem) {
                     vm.activeListItem = listItem;
                     TodoService.getTodos(listItem.id, function (todos) {
                         vm.todos = todos;
@@ -101,7 +107,7 @@
                     }, function (error) {
                         console.error(error);
                     });
-                };
+                }
 
                 function updateTodosLeftCounter() {
                     var completedTodos = vm.todos.filter(function (todo) {
