@@ -31,8 +31,8 @@
         <div class="col-lg-3">
             <ul class="list-group">
                 <li ng-repeat="listItem in todo.lists" class="list-group-item"
-                    ng-click="todo.showItemsForList(listItem)"
-                    ng-class="{listEditing: listItem == todo.editedListItem,active:listItem== todo.activeListItem}">
+                    ng-click="todo.showItemsForList(listItem, $event)"
+                    ng-class="{listEditing: listItem == todo.editedListItem,active: listItem == todo.activeListItem}">
                     <span class="badge">{{listItem.todoCount}}</span>
                     <div class="listView">
                         <label ios-dblclick="todo.editList(listItem)" uib-tooltip="{{listItem.title}}"
