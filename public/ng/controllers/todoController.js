@@ -37,7 +37,7 @@
                 });
 
                 vm.editList = function (list) {
-                    vm.originalListItem = _.extend(vm.originalListItem, list);
+                    vm.originalListItem = _.extend({}, list);
                     vm.editedListItem = list;
                 };
 
@@ -130,7 +130,7 @@
                 };
 
                 vm.editTodo = function (todo) {
-                    vm.originalTodo = _.extend(vm.originalTodo, todo);
+                    vm.originalTodo = _.extend({}, todo);
                     vm.editedTodo = todo;
                 };
 
