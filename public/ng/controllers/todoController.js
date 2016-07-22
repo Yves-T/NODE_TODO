@@ -173,6 +173,7 @@
                     TodoService.removeTodo(todo, vm.activeListItem.id, function (success) {
                         vm.todos.splice(vm.todos.indexOf(todo), 1);
                         vm.activeListItem.todoCount--;
+                        updateTodosLeftCounter();
                     }, function (error) {
                         console.error(error);
                     });
