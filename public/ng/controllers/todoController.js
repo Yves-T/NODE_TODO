@@ -103,6 +103,10 @@
                 }
 
                 vm.addTodo = function () {
+                    if (!vm.newTodo) {
+                        return;
+                    }
+
                     var todo = {
                         description: vm.newTodo
                     };
