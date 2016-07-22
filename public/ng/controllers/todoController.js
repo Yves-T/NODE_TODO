@@ -44,6 +44,7 @@
                 vm.revertListEdits = function (index) {
                     vm.editedListItem = null;
                     vm.lists[index] = vm.originalListItem;
+                    vm.activeListItem = vm.originalListItem;
                     vm.originalListItem = null;
                     vm.listReverted = true;
                 };
