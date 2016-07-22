@@ -50,6 +50,13 @@
                 };
 
                 vm.saveListEdits = function (listItem, event) {
+
+                    if (listItem.title.length == 0) {
+                        vm.revertListEdits(vm.lists.indexOf(listItem));
+                        vm.listReverted = null;
+                        return;
+                    }
+
                     if (vm.listReverted) {
                         vm.listReverted = null;
                         return;
