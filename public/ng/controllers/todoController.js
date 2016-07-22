@@ -123,6 +123,7 @@
                         vm.todos.unshift(success);
                         vm.newTodo = '';
                         vm.activeListItem.todoCount++;
+                        updateTodosLeftCounter();
                     }, function (error) {
                         console.error(error);
                     });
