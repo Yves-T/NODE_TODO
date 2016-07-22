@@ -88,6 +88,8 @@
                         vm.lists.push(listItem);
                         listItem.todoCount = 0;
                         vm.newListItem = '';
+                        vm.activeListItem = listItem;
+                        getTodos(listItem);
                     }, function (error) {
                         console.error(error);
                     });
