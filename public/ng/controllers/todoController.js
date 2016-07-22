@@ -13,6 +13,8 @@
 
                 var vm = this;
 
+                vm.ESCAPE_KEY = 27;
+
                 vm.editedTodo = null;
                 vm.originalTodo = null;
                 vm.filterOption = 'all';
@@ -39,9 +41,9 @@
                     vm.editedListItem = list;
                 };
 
-                vm.revertListEdits = function (listItem) {
+                vm.revertListEdits = function (index) {
                     vm.editedListItem = null;
-                    vm.lists[vm.lists.indexOf[listItem]] = vm.originalListItem;
+                    vm.lists[index] = vm.originalListItem;
                     vm.originalListItem = null;
                     vm.listReverted = true;
                 };
@@ -132,9 +134,11 @@
                     vm.editedTodo = todo;
                 };
 
-                vm.revertEdits = function (todo) {
+                vm.revertEdits = function (index) {
                     vm.editedTodo = null;
-                    vm.todos[vm.todos.indexOf[todo]] = vm.originalTodo;
+                    // duplicate original, otherwise firefox won't update description
+                    vm.todos[index] =
+                        _.pick(vm.originalTodo, 'description', 'completed', 'id', 'createdAt', 'updatedAt', 'listId');
                     vm.originalTodo = null;
                     vm.reverted = true;
                 };

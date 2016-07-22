@@ -45,7 +45,7 @@
                     </div>
                     <form ng-submit="todo.saveListEdits(listItem, 'submit')">
                         <input class="editList form-control" ng-trim="false" ng-model="listItem.title"
-                               todo-escape="todo.revertListEdits(listItem)"
+                               ng-keydown="($event.keyCode === todo.ESCAPE_KEY) && todo.revertListEdits($index)"
                                ng-blur="todo.saveListEdits(listItem, 'blur')"
                                todo-focus="listItem == todo.editedListItem">
                     </form>
@@ -71,7 +71,8 @@
                     </div>
                     <form ng-submit="todo.saveEdits(todoItem, 'submit')">
                         <input class="edit form-control" ng-trim="false" ng-model="todoItem.description"
-                               todo-escape="todo.revertEdits(todo)" ng-blur="todo.saveEdits(todoItem, 'blur')"
+                               ng-keydown="($event.keyCode === todo.ESCAPE_KEY) && todo.revertEdits($index)"
+                               ng-blur="todo.saveEdits(todoItem, 'blur')"
                                todo-focus="todoItem == todo.editedTodo">
                     </form>
                 </li>
