@@ -30,7 +30,7 @@
                     });
                     vm.lists = lists;
                     if (lists.length > 0) {
-                        vm.showItemsForList(lists[0]);
+                        getTodos(lists[0]);
                     }
                 }, function (error) {
                     console.error(error);
