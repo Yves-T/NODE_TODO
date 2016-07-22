@@ -121,6 +121,12 @@
                 };
 
                 vm.saveEdits = function (todo, event) {
+                    if (todo.description.length == 0) {
+                        vm.revertEdits(vm.todos.indexOf(todo));
+                        vm.reverted = null;
+                        return;
+                    }
+
                     if (vm.reverted) {
                         vm.reverted = null;
                         return;
