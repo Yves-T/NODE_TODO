@@ -73,6 +73,11 @@
                 vm.removeListItem = function (listItem) {
                     ListService.removeList(listItem, function (success) {
                         vm.lists.splice(vm.lists.indexOf(listItem), 1);
+                        if (vm.lists.length > 0) {
+                            getTodos(vm.lists[vm.lists.length - 1]);
+                        } else {
+                            vm.todos = [];
+                        }
                     }, function (error) {
                         console.error(error);
                     });
