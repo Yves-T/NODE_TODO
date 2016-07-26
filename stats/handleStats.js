@@ -1,5 +1,5 @@
 const statUtil = require('./statUtils');
-var visitorsData = {};
+const visitorsData = {};
 
 module.exports = function (io, host) {
     io.on('connection', function (socket) {

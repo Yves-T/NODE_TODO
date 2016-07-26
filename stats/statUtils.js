@@ -21,7 +21,7 @@ function calculatePageCounts(visitorsData) {
             var page = visitorsData[key].page;
             var found = _.findWhere(pageCountArray, {url: page});
             if (found) {
-                pageCountArray[page].count++;
+                found.count++;
             } else {
                 pageCountArray.push({url: page, count: 0});
             }
@@ -39,7 +39,7 @@ function calculateRefererCount(visitorsData) {
             var referringSite = visitorsData[key].referringSite || '(direct)';
             var found = _.findWhere(refererArray, {ref: referringSite});
             if (found) {
-                refererArray[referringSite].count++;
+                found.count++;
             } else {
                 refererArray.push({ref: referringSite, count: 0});
             }
