@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dashboardApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Real-Time Web Analytics Dashboard</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+<nav class="navbar navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Real-Time Analytics</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" ng-controller="dashboardController as dbc">
+    <div id="app" ng-cloak>
+        <div class="row">
+
+            <div class="col-xs-9">
+                <h2>Active Pages</h2>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <td>Page URL</td>
+                        <td>Active Users</td>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="p in dbc.pages">
+                            <td>{{ p.url }}</td>
+                            <td>{{ p.count }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Referrals</h2>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <td>Referring Site</td>
+                        <td>Active Users</td>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="ref in dbc.referrers">
+                            <td>{{ ref.ref }}</td>
+                            <td>{{ ref.count }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="col-xs-3">
+                <div class="well">
+                    <h1>{{ dbc.activeUsers }} <i class="fa fa-user" aria-hidden="true"></i></h1>
+                    <h3>Active Users</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
