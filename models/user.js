@@ -34,6 +34,12 @@ module.exports = function (sequelize, DataTypes) {
                 this.setDataValue('salt', salt);
                 this.setDataValue('password_hash', hashedPassword);
             }
+        },
+        resetPasswordToken: {
+            type: DataTypes.STRING
+        },
+        resetPasswordExpires: {
+            type: DataTypes.INTEGER
         }
     }, {
         hooks: {

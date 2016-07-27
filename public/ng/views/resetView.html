@@ -1,0 +1,50 @@
+<div class="resetPassword">
+    <div class="col-sm-6 col-sm-offset-3">
+
+        <h1><span><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> Update password</h1>
+
+        <div class="alert alert-danger" ng-show="reset.resetError">
+            <p>{{reset.errorText}}</p>
+        </div>
+
+        <div class="alert alert-success" ng-show="reset.restOK">
+            <p>Success! Your password has been changed. Click <a ui-sref="login">here</a> to go to the login page.</p>
+        </div>
+
+        <div ng-show="reset.showForm">
+            <form name="userForm" ng-submit="reset.updatePassword(userForm.$valid)" novalidate>
+
+                <div class="form-group"
+                     ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine }">
+                    <label>New password</label>
+                    <input type="password" id="password" name="password" ng-model="reset.formData.password"
+                           ng-minlength="7"
+                           ng-maxlength="20" class="form-control"
+                           placeholder="password" required/>
+                    <p ng-show="userForm.password.$error.minlength" class="error">
+                        Passwords must be between 7 and 20 characters.</p>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{ 'has-error' : password_c.password.$invalid && !password_c.password.$pristine }">
+                    <label for="password_c">Confirm Password</label>
+                    <input type="password" id="password_c" name="password_c" ng-model="reset.formData.password_c"
+                           placeholder="confirm password" class="form-control"
+                           valid-password-c="reset.formData.password" required/>
+                </div>
+
+                <p ng-show="userForm.password_c.$error.noMatch" class="error">Passwords do not match.</p>
+
+                <button type="submit" class="btn btn-warning btn-lg" ng-disabled="userForm.$invalid">
+                    Update Password
+                </button>
+            </form>
+
+            <hr>
+
+        </div>
+
+        <p>Go <a ui-sref="home">home</a>.</p>
+
+    </div>
+</div>

@@ -78,6 +78,16 @@
                     templateUrl: '/ng/views/signUpView.html',
                     controller: 'SignUpController as signup'
                 })
+                .state('forgot', {
+                    url: '/forgot',
+                    templateUrl: '/ng/views/forgotView.html',
+                    controller: 'ForgotController as forgot'
+                })
+                .state('reset', {
+                    url: '/reset',
+                    templateUrl: '/ng/views/resetView.html',
+                    controller: 'ResetController as reset'
+                })
                 .state('todo', {
                     url: '/todo',
                     templateUrl: '/ng/views/todoView.html',

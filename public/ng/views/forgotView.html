@@ -1,0 +1,29 @@
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="fa fa-question-circle-o"></span> Forgot password</h1>
+
+    <div class="alert alert-danger" ng-show="forgot.forgotError">
+        <p>{{forgot.forgotErrorText}}</p>
+    </div>
+
+    <div class="alert alert-success" ng-show="forgot.restOK">
+        <p>{{forgot.forgotSuccessText}}</p>
+    </div>
+
+
+    <div ng-show="forgot.showForm">
+        <form name="userForm" ng-submit="forgot.resetPassword(userForm.$valid)" novalidate>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" ng-model="forgot.email" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-lg" ng-disabled="userForm.$invalid">Reset Password</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <p>Go <a ui-sref="home">home</a>.</p>
+
+</div>
