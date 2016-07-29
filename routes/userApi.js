@@ -1,5 +1,5 @@
 const _ = require('underscore');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
 const passportService = require('../services/passport');
