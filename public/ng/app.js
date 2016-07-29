@@ -96,6 +96,13 @@
         })
         .run(function ($rootScope, $state, $auth, $window, $location, $http) {
 
+            ga('create', 'UA-70180307-7', 'auto');
+
+            $rootScope.$on('$stateChangeSuccess', function (event) {
+                $window.ga('send', 'pageview', $location.path());
+                console.log($location.path());
+            });
+
             $rootScope.$on('$stateChangeStart', function (event, toState) {
                 var user = JSON.parse(localStorage.getItem('user'));
 
